@@ -73,6 +73,8 @@ class database{
 	 */
 	static $stmt;
 
+	static $lastId;
+
 	/**
 	 * init function.
 	 *
@@ -103,7 +105,8 @@ class database{
 	 * @access public
 	 * @static
 	 * @param mixed $consulta (default: null)
-	 * @param bool $consulta (default: false)
+	 * @param mixed $fetch (default: true) | return array assoc if true or statement object if false
+	 * @param bool $debug (default: false)
 	 * @return void
 	 */
 	static function executeQuery($consulta = null, $fetch = true, $debug = false){
@@ -121,8 +124,11 @@ class database{
 						var_dump(self::$stmt->fetchAll(\PDO::FETCH_ASSOC));
 						exit('[ script detenido ]');
 					}
+					self::$lastId = self::$link->lastInsertId();
 					if($fetch){
-						return self::$stmt->fetchAll(\PDO::FETCH_ASSOC);
+						var_dump(self::$stmt);
+						return count($s = self::$stmt->fetchAll(\PDO::FETCH_ASSOC)) > 1 ?$s:
+														empty($s)?$s:$s[0];
 					}else{
 						return self::$stmt;
 					}
@@ -167,17 +173,6 @@ class database{
 	 */
 	static function resultToJson($result){
 		return json_encode($result->fetchAll(\PDO::FETCH_ASSOC));
-	}
-
-	/**
-	 * getId
-	 * retorna el ultimo ID insertado
-	 * @access public
-	 * @static
-	 * @return int
-	 */
-	static function getId(){
-		return self::$link->lastInsertId();
 	}
 }
 
