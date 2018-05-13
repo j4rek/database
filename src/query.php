@@ -7,6 +7,9 @@ namespace j4rek\database;
  */
 class query{
 
+	const LIKESTART = 1;
+	const LIKEFULL = 2;
+	const LIKEEND = 3;
 	/**
 	 * sql_
 	 * Query
@@ -231,6 +234,26 @@ class query{
 	function isNot($val){
 		if($this->check($val))
 			$this->where_ .= $this->operator . " NOT " . $this->field_ . "='" . $val . "'";
+
+		return $this;
+	}
+
+	/**
+	 * like function
+	 * 
+	 * @access public
+	 * @param mixed $val
+	 * @param string $operator | s = 'VALUE%', f = '%VALUE%', e = '%VALUE'
+	 */
+	function like($val, $operator = LIKEFULL){
+		$clause = "";
+		switch($operator){
+			case 1: $clause = " '#VALUE#%'"; break;
+			case 2: $clause = " '%#VALUE#%'"; break;
+			case 3: $clause = " '%#VALUE#'"; break;
+		}
+		if($this->check($val))
+			$this->where_ .= $this->operator . " like " . str_replace('#VALUE#', $val, $clause);
 
 		return $this;
 	}
