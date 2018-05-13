@@ -333,6 +333,18 @@ class query{
 	}
 
 	/**
+	 * delete function
+	 * crea la sentencia DELETE
+	 * @access public
+	 * @param mixed $table [Nombre de la tabla]
+	 * @return void
+	 */
+	function delete($table){
+		$this->sql_ = "DELETE FROM" . $table;
+		return $this;
+	}
+
+	/**
 	 * where function.
 	 * Establece si la Query lleva condicion
 	 * @access public
