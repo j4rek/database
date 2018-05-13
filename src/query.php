@@ -253,7 +253,7 @@ class query{
 			case 3: $clause = " '%#VALUE#'"; break;
 		}
 		if($this->check($val))
-			$this->where_ .= $this->operator . " like " . str_replace('#VALUE#', $val, $clause);
+			$this->where_ .= $this->operator . $this->field_ . " like " . str_replace('#VALUE#', $val, $clause);
 
 		return $this;
 	}
