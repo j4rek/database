@@ -340,7 +340,7 @@ class query{
 	 * @return void
 	 */
 	function delete($table){
-		$this->sql_ = "DELETE FROM" . $table;
+		$this->sql_ = "DELETE FROM " . $table;
 		return $this;
 	}
 
