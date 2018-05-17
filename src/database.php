@@ -140,7 +140,7 @@ class database{
 					self::$lastId = self::$link->lastInsertId();
 					if(self::rowCount() > 0){
 						if($options['fetch'] && strtolower(substr(trim($consulta), 0, 6)) == 'select'){
-							return count($s = self::$stmt->fetchAll(\PDO::FETCH_ASSOC)) > 1 || empty($s) ?$s:$s[0];
+							return self::$stmt->fetchAll(\PDO::FETCH_ASSOC);
 						}else{
 							return self::$stmt;
 						}
